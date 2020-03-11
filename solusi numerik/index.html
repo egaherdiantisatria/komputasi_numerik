@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Metode Bagi-Dua (Bisection Method) - My Docs</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">My Docs</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../biodata/" class="nav-link">Biodata</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">Metode Bagi-Dua (Bisection Method)</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../biodata/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" class="nav-link disabled">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#metode-bagi-dua-bisection-method" class="nav-link">Metode Bagi-Dua (Bisection Method)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#metode-regula-falsi-regula-falsi-method" class="nav-link">Metode Regula Falsi (Regula Falsi Method)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#metode-newton-raphson-newton-raphson-method" class="nav-link">Metode Newton-Raphson (Newton-Raphson Method)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#metode-secant-secant-method" class="nav-link">Metode Secant (Secant Method)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="metode-bagi-dua-bisection-method">Metode Bagi-Dua (Bisection Method)</h1>
+<p><strong>Metode Bagi-Dua</strong> adalah algoritma pencarian akar pada sebuah interval. Interval tersebut membagi dua bagian, lalu memilih dari dua bagian ini dipilih bagian mana yang mengandung akar dan bagian yang tidak mengandung akar dibuang. Hal ini dilakukan berulang-ulang hingga diperoleh akar persamaan atau mendekati akar persamaan. Metode ini berlaku ketika ingin memecahkan persamaan <img alt="f(x)=0" src="https://s0.wp.com/latex.php?latex=f%28x%29%3D0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dengan <img alt="f(x)" src="https://s0.wp.com/latex.php?latex=f%28x%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> merupakan fungsi kontinyu.</p>
+<p><a href="http://s1172.photobucket.com/albums/r578/aimprof08/?action=view&amp;current=MetodeBagiDua.jpg"><img alt="Photobucket" src="https://i2.wp.com/i1172.photobucket.com/albums/r578/aimprof08/MetodeBagiDua.jpg" /></a></p>
+<p>Prosedur Metode Bagi-Dua :</p>
+<p>Misal dijamin bahwa <img alt="f(x)" src="https://s0.wp.com/latex.php?latex=f%28x%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> adalah fungsi kontinyu pada interval <img alt="[a, b]" src="https://s0.wp.com/latex.php?latex=%5Ba%2C+b%5D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="f(a)f(b) &lt; 0" src="https://s0.wp.com/latex.php?latex=f%28a%29f%28b%29+%3C+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" />. Ini artinya bahwa <img alt="f(x)" src="https://s0.wp.com/latex.php?latex=f%28x%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> paling tidak harus memiliki akar pada interval <img alt="[a, b]" src="https://s0.wp.com/latex.php?latex=%5Ba%2C+b%5D&amp;bg=ffffff&amp;fg=666666&amp;s=0" />. Kemudian definisikan titik tengah pada interval <img alt="[a, b]" src="https://s0.wp.com/latex.php?latex=%5Ba%2C+b%5D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> yaitu <img alt="c = \dfrac{a+b}{2}" src="https://s0.wp.com/latex.php?latex=c+%3D+%5Cdfrac%7Ba%2Bb%7D%7B2%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" />. Dari sini kita memperoleh dua subinterval yaitu <img alt="[a, c]" src="https://s0.wp.com/latex.php?latex=%5Ba%2C+c%5D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="[c, b]" src="https://s0.wp.com/latex.php?latex=%5Bc%2C+b%5D&amp;bg=ffffff&amp;fg=666666&amp;s=0" />. Setelah itu, cek apakah <img alt="f(a)f(c) &lt; 0 " src="https://s0.wp.com/latex.php?latex=f%28a%29f%28c%29+%3C+0+&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> atau <img alt="f(b)f(c) &lt; 0" src="https://s0.wp.com/latex.php?latex=f%28b%29f%28c%29+%3C+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> ? Jika <img alt="f(a)f(c) &lt; 0" src="https://s0.wp.com/latex.php?latex=f%28a%29f%28c%29+%3C+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" />maka <img alt="b = c " src="https://s0.wp.com/latex.php?latex=b+%3D+c+&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> (artinya titik <img alt="b" src="https://s0.wp.com/latex.php?latex=b&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> digantikan oleh titik <img alt="c" src="https://s0.wp.com/latex.php?latex=c&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> yang berfungsi sebagai titik <img alt="b" src="https://s0.wp.com/latex.php?latex=b&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> pada iterasi berikutnya), jika tidak maka <img alt="a = c" src="https://s0.wp.com/latex.php?latex=a+%3D+c&amp;bg=ffffff&amp;fg=666666&amp;s=0" />. Dari iterasi pertama kita memperoleh interval <img alt="[a, b]" src="https://s0.wp.com/latex.php?latex=%5Ba%2C+b%5D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> yang baru dan titik tengah <img alt="c" src="https://s0.wp.com/latex.php?latex=c&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> yang baru. Kemudian lakukan pengecekan lagi seperti sebelumnya sampai memperoleh error yang cukup kecil.</p>
+<p><strong>Contoh :
+</strong></p>
+<p>Carilah akar dari <img alt="x^3 + 4x^2 -10 = 0" src="https://s0.wp.com/latex.php?latex=x%5E3+%2B+4x%5E2+-10+%3D+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> pada interval <img alt="[1, 2]" src="https://s0.wp.com/latex.php?latex=%5B1%2C+2%5D&amp;bg=ffffff&amp;fg=666666&amp;s=0" />.</p>
+<p><strong>Penyelesaian :
+</strong></p>
+<p>Dalam penyelesaian ini saya akan menggunakan sampai iterasi ke-10 dan menggunakan 5 angka dibelakang koma.</p>
+<p>f(x) = x3 + 4x2 – 10</p>
+<p>f(1) = (1)3 + 4(1)2 – 10 = -5</p>
+<p>f(2) = (2)3 + 4(2)2 – 10 = 14</p>
+<p>f(1.5) = (1.5)3 + 4(1.5)2 – 10 = 2.375</p>
+<p>f(1.25) = (1.25)3 + 4(1.25)2 – 10 = -1.79687</p>
+<p>f(1.375) = (1.375)3 + 4(1.375)2 – 10 = 0.16210</p>
+<p>f(1.3125) = (1.3125)3 + 4(1.3125)2 – 10 = -0.84838</p>
+<p>f(1.34375) = (1.34375)3 + 4(1.34375)2 – 10 = -0.35098</p>
+<p>f(1.35938) = (1.35938)3 + 4(1.35938)2 – 10 = -0.09632</p>
+<p>f(1.36719) = (1.36719)3 + 4(1.36719)2 – 10 = 0.03239</p>
+<p>f(1.36329) = (1.36329)3 + 4(1.36329)2 – 10 = -0.03200</p>
+<p>f(1.36524) = (1.36524)3 + 4(1.36524)2 – 10 = 0.000016</p>
+<p>f(1.36426) = (1.36426)3 + 4(1.36426)2 – 10 = -0.01601</p>
+<p>f(1.36329) = (1.36329)3 + 4(1.36329)2 – 10 = -0.00784</p>
+<table>
+<thead>
+<tr>
+<th><img alt="n" src="https://s0.wp.com/latex.php?latex=n&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+<th><img alt="a" src="https://s0.wp.com/latex.php?latex=a&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+<th><img alt="b" src="https://s0.wp.com/latex.php?latex=b&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+<th><img alt="c = \dfrac{a + b}{2}" src="https://s0.wp.com/latex.php?latex=c+%3D+%5Cdfrac%7Ba+%2B+b%7D%7B2%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+<th><img alt="f(a)" src="https://s0.wp.com/latex.php?latex=f%28a%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+<th><img alt="f(b)" src="https://s0.wp.com/latex.php?latex=f%28b%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+<th><img alt="f(c)" src="https://s0.wp.com/latex.php?latex=f%28c%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+<th><img alt="f(a)f(c)" src="https://s0.wp.com/latex.php?latex=f%28a%29f%28c%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+<th><img alt="f(b)f(c)" src="https://s0.wp.com/latex.php?latex=f%28b%29f%28c%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>12345678910</td>
+<td>111.251.251.31251.343751.359381.359381.363291.36329</td>
+<td>21.51.51.3751.3751.3751.3751.367191.367191.36524</td>
+<td>1.51.251.3751.31251.343751.359381.367191.363291.365241.36426</td>
+<td>––––––––––</td>
+<td>++++++++++</td>
+<td>+–+–––+–+–</td>
+<td>–+–+++–+–+</td>
+<td>+–+–––+–+–</td>
+</tr>
+</tbody>
+</table>
+<p>Jadi akar yang diperoleh dari <img alt="f(x) = x^3 + 4x^2 -10" src="https://s0.wp.com/latex.php?latex=f%28x%29+%3D+x%5E3+%2B+4x%5E2+-10&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> menggunakan 10 iterasi adalah 1.36426 </p>
+<p>Program Kode</p>
+<pre><code># Regula-Falsi 
+def  Regfal ( a , b , n ): 
+    e  =  0,001 
+    fa  =  a ** 2 - 5 * a + 6 
+    fb  =  b ** 2 - 5 * b + 6 
+    jika  fa * fb &lt; 0 : 
+        n + = 1 
+        cetak ( "iterasi kem" + str ( n )) 
+        x  =  (( a* abs ( fb )) + ( b * abs ( fa ))) / ( abs ( fa ) + abs ( fb )) 
+        fx  =  x ** 2 - 5 * x + 6 
+        jika  fa * fx &lt; 0 : 
+            b  =  x 
+        lain : 
+            a  =  x 
+        jika  abs ( a - b ) &lt; e: 
+            cetak ( x ) 
+        lain : 
+            Regfal ( a , b , n ) 
+    lain : 
+        jika  fa &lt; fb : 
+            a - = 0,1 
+        lainnya : 
+            b + = 0,1 
+        Regfal ( a , b , n )
+
+a  =  float ( input ( "Masukkan interval a:" )) 
+b  =  float ( input ( "Masukkan interval b:" )) 
+Regfal ( a , b , 0 )
+</code></pre>
+<pre><code class="python">`Masukkan interval a: 1`
+`Masukkan interval b: 2.1`
+`iterasi ke-1`
+`iterasi ke-2`
+`iterasi ke-3`
+`iterasi ke-4`
+`iterasi ke-5`
+`iterasi ke-6`
+`iterasi ke-7`
+`iterasi ke-8`
+`iterasi ke-9`
+`iterasi ke-10`
+`iterasi ke-11`
+`iterasi ke-12`
+`iterasi ke-13`
+`iterasi ke-14`
+`iterasi ke-15`
+`iterasi ke-16`
+`iterasi ke-17`
+`iterasi ke-18`
+`iterasi ke-19`
+`iterasi ke-20`
+`iterasi ke-21`
+`iterasi ke-22`
+`iterasi ke-23`
+`iterasi ke-24`
+`iterasi ke-25`
+`iterasi ke-26`
+`iterasi ke-27`
+`iterasi ke-28`
+`iterasi ke-29`
+`iterasi ke-30`
+`iterasi ke-31`
+`iterasi ke-32`
+`iterasi ke-33`
+`iterasi ke-34`
+`iterasi ke-35`
+`iterasi ke-36`
+`iterasi ke-37`
+`iterasi ke-38`
+`iterasi ke-39`
+`iterasi ke-40`
+`iterasi ke-41`
+`iterasi ke-42`
+`iterasi ke-43`
+`iterasi ke-44`
+`iterasi ke-45`
+`iterasi ke-46`
+`iterasi ke-47`
+`2.0000000000000004
+</code></pre>
+
+<h1 id="metode-regula-falsi-regula-falsi-method">Metode Regula Falsi (Regula Falsi Method)</h1>
+<p><strong>Metode Regular Falsi</strong> adalah panduan konsep <a href="https://aimprof08.wordpress.com/2012/08/30/metode-bagi-dua-bisection-method/"><strong>Metode Bagi-Dua</strong></a> dan <a href="https://aimprof08.wordpress.com/2012/09/01/metode-secant-secant-method/"><strong>Metode Secant</strong></a>. Menggunakan konsep <a href="https://aimprof08.wordpress.com/2012/08/30/metode-bagi-dua-bisection-method/"><strong>Metode Bagi-Dua</strong></a> karena dimulai dengan pemilihan dua titik awal <img alt="x_0" src="https://s0.wp.com/latex.php?latex=x_0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="x_1" src="https://s0.wp.com/latex.php?latex=x_1&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> sedemikian sehingga <img alt="f(x_0)" src="https://s0.wp.com/latex.php?latex=f%28x_0%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="f(x_1)" src="https://s0.wp.com/latex.php?latex=f%28x_1%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> berlawanan tanda atau <img alt="f(x_0) f(x_1) &lt; 0" src="https://s0.wp.com/latex.php?latex=f%28x_0%29+f%28x_1%29+%3C+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" />. Kemudian menggunakan konsep <a href="https://aimprof08.wordpress.com/2012/09/01/metode-secant-secant-method/"><strong>Metode Secant</strong></a> yaitu dengan menarik garis <img alt="l" src="https://s0.wp.com/latex.php?latex=l&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dari titik <img alt="f(x_0)" src="https://s0.wp.com/latex.php?latex=f%28x_0%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="f(x_1)" src="https://s0.wp.com/latex.php?latex=f%28x_1%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> sedemikian sehingga garis <img alt="l" src="https://s0.wp.com/latex.php?latex=l&amp;bg=ffffff&amp;fg=666666&amp;s=0" />berpotongan pada sumbu – <img alt="x" src="https://s0.wp.com/latex.php?latex=x&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan memotong kurva / grafik fungsi pada titik <img alt="f(x_0)" src="https://s0.wp.com/latex.php?latex=f%28x_0%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="f(x_1)" src="https://s0.wp.com/latex.php?latex=f%28x_1%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" />. Sehingga <strong>Metode Regular Falsi</strong> ini akan menghasilkan titik potong pada sumbu-<img alt="x" src="https://s0.wp.com/latex.php?latex=x&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> yaitu <img alt="x_2" src="https://s0.wp.com/latex.php?latex=x_2&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> yang merupakan calon akar dan tetap berada dalam interval <img alt="[x_0, x_1]" src="https://s0.wp.com/latex.php?latex=%5Bx_0%2C+x_1%5D&amp;bg=ffffff&amp;fg=666666&amp;s=0" />. Metode ini kemudian berlanjut dengan menghasilkan berturut-turut interval <img alt="[x_{n-1}, x_n]" src="https://s0.wp.com/latex.php?latex=%5Bx_%7Bn-1%7D%2C+x_n%5D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> yang semuanya berisi akar <img alt="f" src="https://s0.wp.com/latex.php?latex=f&amp;bg=ffffff&amp;fg=666666&amp;s=0" />.</p>
+<p><a href="http://s1172.photobucket.com/albums/r578/aimprof08/?action=view&amp;current=MetodeRegularFalsi-1.jpg"><img alt="Photobucket" src="https://i2.wp.com/i1172.photobucket.com/albums/r578/aimprof08/MetodeRegularFalsi-1.jpg" /></a></p>
+<p>Prosedur <strong>Metode Regular Falsi</strong></p>
+<p>Menentukan interval titik awal x0 dan x1 sedemikian sehingga <img alt="f(x_0) f(x_1) &lt; 0" src="https://s0.wp.com/latex.php?latex=f%28x_0%29+f%28x_1%29+%3C+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" />. Setelah itu menghitung <img alt="x_2 = x_1- \dfrac{f(x_1)[x_1-x_0]}{f(x_1)-f(x_0)}" src="https://s0.wp.com/latex.php?latex=x_2+%3D+x_1-+%5Cdfrac%7Bf%28x_1%29%5Bx_1-x_0%5D%7D%7Bf%28x_1%29-f%28x_0%29%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" />. Kemudian periksa apakah <img alt="f(x_0) f(x_2) &lt; 0" src="https://s0.wp.com/latex.php?latex=f%28x_0%29+f%28x_2%29+%3C+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> atau <img alt="f(x_1) f(x_2) &lt; 0" src="https://s0.wp.com/latex.php?latex=f%28x_1%29+f%28x_2%29+%3C+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" />, jika <img alt="f(x_0) f(x_2) &lt; 0" src="https://s0.wp.com/latex.php?latex=f%28x_0%29+f%28x_2%29+%3C+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> maka <img alt="x_0 = x_0" src="https://s0.wp.com/latex.php?latex=x_0+%3D+x_0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> atau <img alt="x_2 = x_1" src="https://s0.wp.com/latex.php?latex=x_2+%3D+x_1&amp;bg=ffffff&amp;fg=666666&amp;s=0" />, jika tidak maka <img alt="x_1 = x_1" src="https://s0.wp.com/latex.php?latex=x_1+%3D+x_1&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> atau <img alt="x_2 = x_0" src="https://s0.wp.com/latex.php?latex=x_2+%3D+x_0&amp;bg=ffffff&amp;fg=666666&amp;s=0" />. Kemudian ulangi terus langkah-langkah tersebut sampai ketemu ‘akar’ yang paling mendekati ‘akar yang sebenarnya’ atau mempunyai error yang cukup kecil.</p>
+<p>Secara umum, rumus untuk <strong>Metode Regular Falsi</strong> ini adalah sebagai berikut</p>
+<p><img alt="x_{n+1} = x_n -\dfrac{f(x_n)[x_n-x_{n-1}]}{f(x_n)-f(x_{n-1})}" src="https://s0.wp.com/latex.php?latex=x_%7Bn%2B1%7D+%3D+x_n+-%5Cdfrac%7Bf%28x_n%29%5Bx_n-x_%7Bn-1%7D%5D%7D%7Bf%28x_n%29-f%28x_%7Bn-1%7D%29%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p>Untuk mendapatkan rumus tersebut, perhatikan gambar diatas.</p>
+<p>syarat : <img alt="f(x_0) f(x_1) &lt; 0" src="https://s0.wp.com/latex.php?latex=f%28x_0%29+f%28x_1%29+%3C+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p>pandang garis <em>l</em> yang melalui <img alt="(x_0, f(x_0))" src="https://s0.wp.com/latex.php?latex=%28x_0%2C+f%28x_0%29%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="(x_1, f(x_1))" src="https://s0.wp.com/latex.php?latex=%28x_1%2C+f%28x_1%29%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> sebagai gradien garis, sehingga diperoleh persamaan gradient sebagai berikut</p>
+<p><img alt="\dfrac{f(x_1)-f(x_0)}{x_1-x_0} = \dfrac{f(x_1)-y}{x_1-x_2}" src="https://s0.wp.com/latex.php?latex=%5Cdfrac%7Bf%28x_1%29-f%28x_0%29%7D%7Bx_1-x_0%7D+%3D+%5Cdfrac%7Bf%28x_1%29-y%7D%7Bx_1-x_2%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p>karena <img alt="x_2" src="https://s0.wp.com/latex.php?latex=x_2&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> merupakan titik potong pada sumbu-<img alt="x" src="https://s0.wp.com/latex.php?latex=x&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> maka <img alt="f(x_2)=0=y" src="https://s0.wp.com/latex.php?latex=f%28x_2%29%3D0%3Dy&amp;bg=ffffff&amp;fg=666666&amp;s=0" />, sehingga diperoleh</p>
+<p><img alt="\dfrac{f(x_1)-f(x_0)}{x_1-x_0} = \dfrac{f(x_1)-0}{x_1-x_2}" src="https://s0.wp.com/latex.php?latex=%5Cdfrac%7Bf%28x_1%29-f%28x_0%29%7D%7Bx_1-x_0%7D+%3D+%5Cdfrac%7Bf%28x_1%29-0%7D%7Bx_1-x_2%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="x_1-x_2 = \dfrac{f(x_1)[x_1-x_0]}{f(x_1)-f(x_0)}" src="https://s0.wp.com/latex.php?latex=x_1-x_2+%3D+%5Cdfrac%7Bf%28x_1%29%5Bx_1-x_0%5D%7D%7Bf%28x_1%29-f%28x_0%29%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="x_2 = x_1- \dfrac{f(x_1)(x_1-x_0)}{f(x_1)-f(x_0)}" src="https://s0.wp.com/latex.php?latex=x_2+%3D+x_1-+%5Cdfrac%7Bf%28x_1%29%28x_1-x_0%29%7D%7Bf%28x_1%29-f%28x_0%29%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p>atau jika ditulis secara umum menjadi</p>
+<p><img alt="x_{n+1} = x_n -\dfrac{f(x_n)[x_n-x_{n-1}]}{f(x_n)-f(x_{n-1})}" src="https://s0.wp.com/latex.php?latex=x_%7Bn%2B1%7D+%3D+x_n+-%5Cdfrac%7Bf%28x_n%29%5Bx_n-x_%7Bn-1%7D%5D%7D%7Bf%28x_n%29-f%28x_%7Bn-1%7D%29%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><strong>Contoh :</strong></p>
+<p>Tentukan akar dari <img alt="4x^3-15x2 + 17x-6 = 0" src="https://s0.wp.com/latex.php?latex=4x%5E3-15x2+%2B+17x-6+%3D+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> menggunakan <strong>Metode Regular Falsi</strong>sampai 9 iterasi.</p>
+<p><strong>Penyelesaian :</strong></p>
+<p>6<img alt="f(x) = 4x^3-15x2 + 17x-6" src="https://s0.wp.com/latex.php?latex=f%28x%29+%3D+4x%5E3-15x2+%2B+17x-6&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><strong>iterasi 1 :</strong></p>
+<p>ambil <img alt="x_0 = -1" src="https://s0.wp.com/latex.php?latex=x_0+%3D+-1&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="x_1 = 3" src="https://s0.wp.com/latex.php?latex=x_1+%3D+3&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="f(-1) = 4(-1)^3 -15(-1)^2 + 17(-1) -6 = -42" src="https://s0.wp.com/latex.php?latex=f%28-1%29+%3D+4%28-1%29%5E3+-15%28-1%29%5E2+%2B+17%28-1%29+-6+%3D+-42&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="f(3) = 4(3)^3 -15(3)^2 + 17(3) -6 = 18" src="https://s0.wp.com/latex.php?latex=f%283%29+%3D+4%283%29%5E3+-15%283%29%5E2+%2B+17%283%29+-6+%3D+18&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="x_2 = 3 -\dfrac{(18)[3-(-1)]}{18-(-42)} = 1.8" src="https://s0.wp.com/latex.php?latex=x_2+%3D+3+-%5Cdfrac%7B%2818%29%5B3-%28-1%29%5D%7D%7B18-%28-42%29%7D+%3D+1.8&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="f(1.8) = 4(1.8)^3 -15(1.8)^2 + 17(1.8) -6 = -0.672" src="https://s0.wp.com/latex.php?latex=f%281.8%29+%3D+4%281.8%29%5E3+-15%281.8%29%5E2+%2B+17%281.8%29+-6+%3D+-0.672&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="f(3) f(1.8) &lt; 0" src="https://s0.wp.com/latex.php?latex=f%283%29+f%281.8%29+%3C+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> maka ambil <img alt="x_0 = x_2 = 1.8" src="https://s0.wp.com/latex.php?latex=x_0+%3D+x_2+%3D+1.8&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="x_1 = 3" src="https://s0.wp.com/latex.php?latex=x_1+%3D+3&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><strong>iterasi 2 :</strong></p>
+<p><img alt="x_2 = 3 -\dfrac{(18)[3-1.8]}{18-(-0.672)} = 1.84319" src="https://s0.wp.com/latex.php?latex=x_2+%3D+3+-%5Cdfrac%7B%2818%29%5B3-1.8%5D%7D%7B18-%28-0.672%29%7D+%3D+1.84319&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="f(1.84319) = 4(1.84319)^3 -15(1.84319)^2 + 17(1.84319) -6 = -0.57817" src="https://s0.wp.com/latex.php?latex=f%281.84319%29+%3D+4%281.84319%29%5E3+-15%281.84319%29%5E2+%2B+17%281.84319%29+-6+%3D+-0.57817&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="f(3) f(1.84319) &lt; 0" src="https://s0.wp.com/latex.php?latex=f%283%29+f%281.84319%29+%3C+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> maka ambil <img alt="x_0 = x_2 = 1.84319" src="https://s0.wp.com/latex.php?latex=x_0+%3D+x_2+%3D+1.84319&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="x_1 = 3" src="https://s0.wp.com/latex.php?latex=x_1+%3D+3&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><strong>iterasi 3 :</strong></p>
+<p><img alt="x_2 = 3 -\dfrac{(18)[3-1.84319]}{18-(-0.57817)} = 1.87919" src="https://s0.wp.com/latex.php?latex=x_2+%3D+3+-%5Cdfrac%7B%2818%29%5B3-1.84319%5D%7D%7B18-%28-0.57817%29%7D+%3D+1.87919&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="f(1.87919) = 4(1.87919)^3 -15(1.87919)2 + 17(1.87919) -6 = -0.47975" src="https://s0.wp.com/latex.php?latex=f%281.87919%29+%3D+4%281.87919%29%5E3+-15%281.87919%292+%2B+17%281.87919%29+-6+%3D+-0.47975&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="f(3) f(1.87919) &lt; 0" src="https://s0.wp.com/latex.php?latex=f%283%29+f%281.87919%29+%3C+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> maka ambil <img alt="x_0 = x_2 = 1.87919" src="https://s0.wp.com/latex.php?latex=x_0+%3D+x_2+%3D+1.87919&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="x_1 = 3" src="https://s0.wp.com/latex.php?latex=x_1+%3D+3&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><strong>iterasi 4 :</strong></p>
+<p><img alt="x_2 = 3 -\dfrac{(18)[3-1.84319]}{18-(-0.47975)} = 1.90829" src="https://s0.wp.com/latex.php?latex=x_2+%3D+3+-%5Cdfrac%7B%2818%29%5B3-1.84319%5D%7D%7B18-%28-0.47975%29%7D+%3D+1.90829&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="f(1.90829) = 4(1.90829)^3 -15(1.90829)^2 + 17(1.90829) -6 = -0.38595" src="https://s0.wp.com/latex.php?latex=f%281.90829%29+%3D+4%281.90829%29%5E3+-15%281.90829%29%5E2+%2B+17%281.90829%29+-6+%3D+-0.38595&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="f(3) f(1.90829) &lt; 0" src="https://s0.wp.com/latex.php?latex=f%283%29+f%281.90829%29+%3C+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> maka ambil <img alt="x_0 = x_2 = 1.9082" src="https://s0.wp.com/latex.php?latex=x_0+%3D+x_2+%3D%C2%A01.9082&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="x_1 = 3" src="https://s0.wp.com/latex.php?latex=x_1+%3D+3&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><strong>iterasi 5 :</strong></p>
+<p><img alt="x_2 = 3 -\dfrac{(18)[3-1.90829]}{18-(-0.38595)} = 1.93120" src="https://s0.wp.com/latex.php?latex=x_2+%3D+3+-%5Cdfrac%7B%2818%29%5B3-1.90829%5D%7D%7B18-%28-0.38595%29%7D+%3D+1.93120&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="f(1.93120) = 4(1.93120)^3 -15(1.93120)^2 + 17(1.93120) -6 = -0.30269" src="https://s0.wp.com/latex.php?latex=f%281.93120%29+%3D+4%281.93120%29%5E3+-15%281.93120%29%5E2+%2B+17%281.93120%29+-6+%3D+-0.30269&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="f(3) f(1.93120) &lt; 0" src="https://s0.wp.com/latex.php?latex=f%283%29+f%281.93120%29+%3C+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> maka ambil <img alt="x_0 = x_2 = 1.93120" src="https://s0.wp.com/latex.php?latex=x_0+%3D+x_2+%3D%C2%A01.93120&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="x_1 = 3" src="https://s0.wp.com/latex.php?latex=x_1+%3D+3&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><strong>iterasi 6 :</strong></p>
+<p><img alt="x_2 = 3 -\dfrac{(18)[3-1.93120]}{18-(-0.30269)} = 1.94888" src="https://s0.wp.com/latex.php?latex=x_2+%3D+3+-%5Cdfrac%7B%2818%29%5B3-1.93120%5D%7D%7B18-%28-0.30269%29%7D+%3D+1.94888&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="f(1.94888) = 4(1.94888)^3 -15(1.94888)2 + 17(1.94888) -6 = -0.23262" src="https://s0.wp.com/latex.php?latex=f%281.94888%29+%3D+4%281.94888%29%5E3+-15%281.94888%292+%2B+17%281.94888%29+-6+%3D+-0.23262&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="f(3) f(1.94888) &lt; 0" src="https://s0.wp.com/latex.php?latex=f%283%29+f%281.94888%29+%3C+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> maka ambil <img alt="x_0 = x_2 = 1.94888" src="https://s0.wp.com/latex.php?latex=x_0+%3D+x_2+%3D%C2%A01.94888&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="x_1 = 3" src="https://s0.wp.com/latex.php?latex=x_1+%3D+3&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><strong>iterasi 7 :</strong></p>
+<p><img alt="x_2 = 3 -\dfrac{(18)[3-1.94888]}{18-(-0.23262)} = 1.96229" src="https://s0.wp.com/latex.php?latex=x_2+%3D+3+-%5Cdfrac%7B%2818%29%5B3-1.94888%5D%7D%7B18-%28-0.23262%29%7D+%3D+1.96229&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="f(1.96229) = 4(1.96229)^3 -15(1.96229)^2 + 17(1.96229) -6 = -0.17597" src="https://s0.wp.com/latex.php?latex=f%281.96229%29+%3D+4%281.96229%29%5E3+-15%281.96229%29%5E2+%2B+17%281.96229%29+-6+%3D+-0.17597&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="f(3) f(1.96229) &lt; 0" src="https://s0.wp.com/latex.php?latex=f%283%29+f%281.96229%29+%3C+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> maka ambil <img alt="x_0 = x_2 = 1.96229" src="https://s0.wp.com/latex.php?latex=x_0+%3D+x_2+%3D%C2%A01.96229&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="x_1 = 3" src="https://s0.wp.com/latex.php?latex=x_1+%3D+3&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><strong>iterasi 8 :</strong></p>
+<p><img alt="x_2 = 3 -\frac{(18)[3-1.96229]}{18-(-0.17597)} = 1.97234" src="https://s0.wp.com/latex.php?latex=x_2+%3D+3+-%5Cfrac%7B%2818%29%5B3-1.96229%5D%7D%7B18-%28-0.17597%29%7D+%3D+1.97234&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="f(1.97234) = 4(1.97234)^3 -15(1.97234)2 + 17(1.97234) -6 = -0.13152" src="https://s0.wp.com/latex.php?latex=f%281.97234%29+%3D+4%281.97234%29%5E3+-15%281.97234%292+%2B+17%281.97234%29+-6+%3D+-0.13152&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="f(3) f(1.97234) &lt; 0" src="https://s0.wp.com/latex.php?latex=f%283%29+f%281.97234%29+%3C+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> maka ambil <img alt="x_0 = x_2 = 1.97234" src="https://s0.wp.com/latex.php?latex=x_0+%3D+x_2+%3D%C2%A01.97234&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="x_1 = 3" src="https://s0.wp.com/latex.php?latex=x_1+%3D+3&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><strong>iterasi 9 :</strong></p>
+<p><img alt="x_2 = 3 -\dfrac{(18)[3-1.97234]}{18-(-0.13152)} = 1.97979" src="https://s0.wp.com/latex.php?latex=x_2+%3D+3+-%5Cdfrac%7B%2818%29%5B3-1.97234%5D%7D%7B18-%28-0.13152%29%7D+%3D+1.97979&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<table>
+<thead>
+<tr>
+<th><img alt="n" src="https://s0.wp.com/latex.php?latex=n&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+<th><img alt="x_0" src="https://s0.wp.com/latex.php?latex=x_0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+<th><img alt="x_1" src="https://s0.wp.com/latex.php?latex=x_1&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+<th><img alt="x_2" src="https://s0.wp.com/latex.php?latex=x_2&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+<th><img alt="f(x_0)" src="https://s0.wp.com/latex.php?latex=f%28x_0%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+<th><img alt="f(x_1)" src="https://s0.wp.com/latex.php?latex=f%28x_1%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+<th><img alt="f(x_2)" src="https://s0.wp.com/latex.php?latex=f%28x_2%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>123456789</td>
+<td>-11.81.843191.879191.908291.931201.948881.962291.97234</td>
+<td>333333333</td>
+<td>1.81.843191.879191.908291.931201.948881.962291.972341.97979</td>
+<td>-42-0.672-0.57817-0.47975-0.38595-0.30269-0.23262-0.17597-0.13152</td>
+<td>181818181818181818</td>
+<td>-0.672-0.57817-0.47975-0.38595-0.30269-0.23262-0.17597-0.13152-0.09741</td>
+</tr>
+</tbody>
+</table>
+<p>Jadi akar dari persamaan <img alt="4x^3-15x2 + 17x-6 = 0" src="https://s0.wp.com/latex.php?latex=4x%5E3-15x2+%2B+17x-6+%3D+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> menggunakan <strong>Metode Regular Falsi</strong> adalah <img alt="1.97979" src="https://s0.wp.com/latex.php?latex=1.97979&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><strong>Program Kode</strong></p>
+<pre><code># Regula-Falsi 
+def  Regfal ( a , b , n ): 
+    e  =  0,001 
+    fa  =  a ** 2 - 5 * a + 6 
+    fb  =  b ** 2 - 5 * b + 6 
+    jika  fa * fb &lt; 0 : 
+        n + = 1 
+        cetak ( &quot;iterasi kem&quot; + str ( n )) 
+        x  =  (( a* abs ( fb )) + ( b * abs ( fa ))) / ( abs ( fa ) + abs ( fb )) 
+        fx  =  x ** 2 - 5 * x + 6 
+        jika  fa * fx &lt; 0 : 
+            b  =  x 
+        lain : 
+            a  =  x 
+        jika  abs ( a - b ) &lt; e: 
+            cetak ( x ) 
+        lain : 
+            Regfal ( a , b , n ) 
+    lain : 
+        jika  fa &lt; fb : 
+            a - = 0,1 
+        lainnya : 
+            b + = 0,1 
+        Regfal ( a , b , n )
+
+a  =  float ( input ( &quot;Masukkan interval a:&quot; )) 
+b  =  float ( input ( &quot;Masukkan interval b:&quot; )) 
+Regfal ( a , b , 0 )
+</code></pre>
+
+<p><strong>Keluaran</strong></p>
+<pre><code class="python">Masukkan interval a: 1
+Masukkan interval b: 2.1
+iterasi ke-1
+iterasi ke-2
+iterasi ke-3
+iterasi ke-4
+iterasi ke-5
+iterasi ke-6
+iterasi ke-7
+iterasi ke-8
+iterasi ke-9
+iterasi ke-10
+iterasi ke-11
+iterasi ke-12
+iterasi ke-13
+iterasi ke-14
+iterasi ke-15
+iterasi ke-16
+iterasi ke-17
+iterasi ke-18
+iterasi ke-19
+iterasi ke-20
+iterasi ke-21
+iterasi ke-22
+iterasi ke-23
+iterasi ke-24
+iterasi ke-25
+iterasi ke-26
+iterasi ke-27
+iterasi ke-28
+iterasi ke-29
+iterasi ke-30
+iterasi ke-31
+iterasi ke-32
+iterasi ke-33
+iterasi ke-34
+iterasi ke-35
+iterasi ke-36
+iterasi ke-37
+iterasi ke-38
+iterasi ke-39
+iterasi ke-40
+iterasi ke-41
+iterasi ke-42
+iterasi ke-43
+iterasi ke-44
+iterasi ke-45
+iterasi ke-46
+iterasi ke-47
+2.0000000000000004
+</code></pre>
+
+<h1 id="metode-newton-raphson-newton-raphson-method">Metode Newton-Raphson (Newton-Raphson Method)</h1>
+<p><strong>Metode Newton-Raphson</strong> adalah metode pencarian akar suatu fungsi <img alt="f(x)" src="https://s0.wp.com/latex.php?latex=f%28x%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dengan pendekatan satu titik, dimana fungsi <img alt="f(x" src="https://s0.wp.com/latex.php?latex=f%28x&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> mempunyai turunan. Metode ini dianggap lebih mudah dari <a href="https://aimprof08.wordpress.com/2012/08/30/metode-bagi-dua-bisection-method/"><strong>Metode Bagi-Dua</strong></a> (Bisection Method) karena metode ini menggunakan pendekatan satu titik sebagai titik awal. Semakin dekat titik awal yang kita pilih dengan akar sebenarnya, maka semakin cepat konvergen ke akarnya.</p>
+<p><a href="http://s1172.photobucket.com/albums/r578/aimprof08/?action=view&amp;current=MetodeNewton-Rapshon.jpg"><img alt="Photobucket" src="https://i2.wp.com/i1172.photobucket.com/albums/r578/aimprof08/MetodeNewton-Rapshon.jpg" /></a></p>
+<p>Prosedur Metode Newton :</p>
+<p>menentukan <img alt="x_0" src="https://s0.wp.com/latex.php?latex=x_0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> sebagai titik awal, kemudian menarik garis lurus (misal garis<em><img alt="l" src="https://s0.wp.com/latex.php?latex=l&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></em>) yang menyinggung titik <img alt="f(x_0)" src="https://s0.wp.com/latex.php?latex=f%28x_0%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" />. Hal ini berakibat garis <img alt="l" src="https://s0.wp.com/latex.php?latex=l&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> memotong sumbu-<img alt="x" src="https://s0.wp.com/latex.php?latex=x&amp;bg=ffffff&amp;fg=666666&amp;s=0" />di titik <img alt="x_1" src="https://s0.wp.com/latex.php?latex=x_1&amp;bg=ffffff&amp;fg=666666&amp;s=0" />. Setelah itu diulangi langkah sebelumnya tapi sekarang <img alt="x_1" src="https://s0.wp.com/latex.php?latex=x_1&amp;bg=ffffff&amp;fg=666666&amp;s=0" />dianggap sebagai titik awalnya. Dari mengulang langkah-langkah sebelumnya akan mendapatkan <img alt="x_2, x_3, \ldots, x_n" src="https://s0.wp.com/latex.php?latex=x_2%2C+x_3%2C+%5Cldots%2C+x_n&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dengan <img alt="x_n" src="https://s0.wp.com/latex.php?latex=x_n&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> yang diperoleh adalah bilangan riil yang merupakan akar atau mendekati akar yang sebenarnya.</p>
+<p>Perhatikan gambar diatas untuk menurunkan rumus <strong>Metode Newton-Raphson</strong></p>
+<p>persamaan garis <img alt="l : y -y_0 = m(x- x_0)" src="https://s0.wp.com/latex.php?latex=l+%3A+y+-y_0+%3D+m%28x-+x_0%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="y -f(x_0) = f'(x_0)(x -x_0)" src="https://s0.wp.com/latex.php?latex=y+-f%28x_0%29+%3D+f%27%28x_0%29%28x+-x_0%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="x_1" src="https://s0.wp.com/latex.php?latex=x_1&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> adalah perpotongan garis <img alt="l" src="https://s0.wp.com/latex.php?latex=l&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dengan sumbu-<img alt="x" src="https://s0.wp.com/latex.php?latex=x&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="0-f(x_0) = f'(x_0)(x -x_0)" src="https://s0.wp.com/latex.php?latex=0-f%28x_0%29+%3D+f%27%28x_0%29%28x+-x_0%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="y = 0" src="https://s0.wp.com/latex.php?latex=y+%3D+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="x = x_1" src="https://s0.wp.com/latex.php?latex=x+%3D+x_1&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> maka koordinat titik <img alt="(x_1, 0)" src="https://s0.wp.com/latex.php?latex=%28x_1%2C+0%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="-\dfrac{f(x_{0})}{f'(x_{0})} = (x_1-x_0)" src="https://s0.wp.com/latex.php?latex=-%5Cdfrac%7Bf%28x_%7B0%7D%29%7D%7Bf%27%28x_%7B0%7D%29%7D+%3D+%28x_1-x_0%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="x_1 = x_0- \dfrac{f(x_0)}{f'(x_0)}" src="https://s0.wp.com/latex.php?latex=x_1+%3D+x_0-+%5Cdfrac%7Bf%28x_0%29%7D%7Bf%27%28x_0%29%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="x_2 = x_1- \dfrac{f(x_1)}{f'(x_1)}" src="https://s0.wp.com/latex.php?latex=x_2+%3D+x_1-+%5Cdfrac%7Bf%28x_1%29%7D%7Bf%27%28x_1%29%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p>.</p>
+<p>.</p>
+<p>.</p>
+<p><img alt="x_n = x_{n-1}- \dfrac{f(x_{n-1})}{f'(x_{n-1})}" src="https://s0.wp.com/latex.php?latex=x_n+%3D+x_%7Bn-1%7D-+%5Cdfrac%7Bf%28x_%7Bn-1%7D%29%7D%7Bf%27%28x_%7Bn-1%7D%29%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> untuk n = 1, 2, 3, …</p>
+<p><strong>Contoh :</strong></p>
+<p>Tentukan akar dari persamaan <img alt="4x^3-15x^2 + 17x-6 = 0" src="https://s0.wp.com/latex.php?latex=4x%5E3-15x%5E2+%2B+17x-6+%3D+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> menggunakan Metode Newton-Raphson.</p>
+<p><strong>Penyelesaian :</strong></p>
+<p><img alt="f(x) = 4x^3-15x^2 + 17x-6" src="https://s0.wp.com/latex.php?latex=f%28x%29+%3D+4x%5E3-15x%5E2+%2B+17x-6&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="f'(x) = 12x^2-30x + 17" src="https://s0.wp.com/latex.php?latex=f%27%28x%29+%3D+12x%5E2-30x+%2B+17&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p>iterasi 1 :</p>
+<p>ambil titik awal x0 = 3</p>
+<p>f(3) = 4(3)3 – 15(3)2 + 17(3) – 6 = 18</p>
+<p>f’(3) = 12(3)2 – 30(3) + 17 = 35</p>
+<p>x1 = 3 – <img alt="\frac{18}{35} " src="https://s0.wp.com/latex.php?latex=%5Cfrac%7B18%7D%7B35%7D+&amp;bg=ffffff&amp;fg=666666&amp;s=2" /> = 2.48571</p>
+<p>iterasi 2 :</p>
+<p>f(2.48571) = 4(2.48571)3 – 15(2.48571)2 + 17(2.48571) – 6 = 5.01019</p>
+<p>f’(2.48571) = 12(2.48571)2 – 30(2.48571) + 17 = 16.57388</p>
+<p>x2 = 2.48571 – <img alt="\frac{5.01019}{16.57388} " src="https://s0.wp.com/latex.php?latex=%5Cfrac%7B5.01019%7D%7B16.57388%7D+&amp;bg=ffffff&amp;fg=666666&amp;s=2" /> = 2.18342</p>
+<p>iterasi 3 :</p>
+<p>f(2.18342) = 4(2.18342)3 – 15(2.18342)2 + 17(2.18342) – 6 = 1.24457</p>
+<p>f’(2.18342) = 12(2.18342)2 – 30(2.18342) + 17 = 8.70527</p>
+<p>x3 = 2.18342 – <img alt="\frac{1.24457}{8.70527} " src="https://s0.wp.com/latex.php?latex=%5Cfrac%7B1.24457%7D%7B8.70527%7D+&amp;bg=ffffff&amp;fg=666666&amp;s=2" /> = 2.04045</p>
+<p>iterasi 4 :</p>
+<p>f(2.04045) = 4(2.04045)3 – 15(2.04045)2 + 17(2.04045) – 6 = 0.21726</p>
+<p>f’(2.04045) = 12(2.04045)2 – 30(2.04045) + 17 = 5.74778</p>
+<p>x4 = 2.04045 – <img alt="\frac{0.21726}{5.74778} " src="https://s0.wp.com/latex.php?latex=%5Cfrac%7B0.21726%7D%7B5.74778%7D+&amp;bg=ffffff&amp;fg=666666&amp;s=2" /> = 2.00265</p>
+<p>iterasi 5 :</p>
+<p>f(3) = 4(2.00265)3 – 15(2.00265)2 + 17(2.00265) – 6 = 0.01334</p>
+<p>f’(2.00265) = 12(2.00265)2 – 30(2.00265) + 17 = 5.04787</p>
+<p>x5 = 2.00265 – <img alt="\frac{0.01334}{5.04787} " src="https://s0.wp.com/latex.php?latex=%5Cfrac%7B0.01334%7D%7B5.04787%7D+&amp;bg=ffffff&amp;fg=666666&amp;s=2" /> = 2.00001</p>
+<p>iterasi 6 :</p>
+<p>f(2.00001) = 4(2.00001)3 – 15(2.00001)2 + 17(2.00001) – 6 = 0.00006</p>
+<p>f’(2.00001) = 12(2.00001)2 – 30(2.00001) + 17 = 5.00023</p>
+<p>x6 = 2.00001 – <img alt="\frac{0.00006}{5.00023} " src="https://s0.wp.com/latex.php?latex=%5Cfrac%7B0.00006%7D%7B5.00023%7D+&amp;bg=ffffff&amp;fg=666666&amp;s=2" /> = 2.00000</p>
+<p>iterasi 7 :</p>
+<p>f(2) = 4(2)3 – 15(2)2 + 17(2) – 6 = 0</p>
+<p>jika disajikan dalam tabel, maka seperti tabel dibawah ini.</p>
+<table>
+<thead>
+<tr>
+<th><img alt="n" src="https://s0.wp.com/latex.php?latex=n&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+<th><img alt="x_n" src="https://s0.wp.com/latex.php?latex=x_n&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+<th><img alt="f(x_n)" src="https://s0.wp.com/latex.php?latex=f%28x_n%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+<th><img alt="f'(x_n)" src="https://s0.wp.com/latex.php?latex=f%27%28x_n%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0123456</td>
+<td>32.485712.183422.040452.002652.000012.00000</td>
+<td>185.010191.244570.217260.013340.000060.00000</td>
+<td>3516.573888.705275.747785.047875.000235.00000</td>
+</tr>
+</tbody>
+</table>
+<p>karena pada iterasi ketujuh <img alt="f(x_6) = 0" src="https://s0.wp.com/latex.php?latex=f%28x_6%29+%3D+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> maka akar dari persamaan tersebut adalah <img alt="x = 2" src="https://s0.wp.com/latex.php?latex=x+%3D+2&amp;bg=ffffff&amp;fg=666666&amp;s=0" />.</p>
+<p><strong>Program</strong></p>
+<pre><code class="python"># Newton-Raphson 
+x  =  float ( input ( &quot;Masukkan nilai awal x:&quot; )) 
+n  =  0 
+e  =  0,001 
+sedangkan  n &gt; = 0 : 
+    print ( &quot;iterasi saat X&quot; + str ( n )) 
+    fx  =  x ** 2 - 5 * x + 6 
+    faks  =  2 * x - 5 
+    x1  =  x  -  ( fx / faks )
+    jika  abs ( x1 - x ) &lt; e  atau  n &gt; = 100 : 
+        print ( &quot;Jumlah iterasi:&quot; , n + 1 ) 
+        print ( x ) 
+        memecah 
+    lain : 
+        x = x1 
+    n + = 1
+</code></pre>
+
+<p><strong>Keluaran</strong></p>
+<pre><code class="python">Masukkan nilai awal x: 2.4
+iterasi saat X0
+iterasi saat X1
+iterasi saat X2
+iterasi saat X3
+iterasi saat X4
+iterasi saat X5
+Jumlah iterasi: 6
+1.9999976821746035
+</code></pre>
+
+<h1 id="metode-secant-secant-method">Metode Secant (Secant Method)</h1>
+<p>Pada <strong>Metode Newton-Raphson</strong> memerlukan syarat wajib yaitu fungsi <img alt="f(x)" src="https://s0.wp.com/latex.php?latex=f%28x%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> harus memiliki turunan <img alt="f'(x)" src="https://s0.wp.com/latex.php?latex=f%27%28x%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" />. Sehingga syarat wajib ini dianggap sulit karena tidak semua fungsi bisa dengan mudah mencari turunannya. Oleh karena itu muncul ide dari yaitu mencari persamaan yang ekivalen dengan rumus turunan fungsi. Ide ini lebih dikenal dengan nama <strong>Metode Secant</strong>. Ide dari metode ini yaitu menggunakan gradien garis yang melalui titik <img alt="(x_0, f(x_0))" src="https://s0.wp.com/latex.php?latex=%28x_0%2C+f%28x_0%29%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="(x_1, f(x_1))" src="https://s0.wp.com/latex.php?latex=%28x_1%2C+f%28x_1%29%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" />. Perhatikan gambar dibawah ini.</p>
+<p><a href="http://s1172.photobucket.com/albums/r578/aimprof08/?action=view&amp;current=SecantMethod.jpg"><img alt="Photobucket" src="https://i2.wp.com/i1172.photobucket.com/albums/r578/aimprof08/SecantMethod.jpg" /></a></p>
+<p>Persamaan garis <em>l</em> adalah</p>
+<p><img alt="\dfrac{x-x_1}{x_0-x_1} = \dfrac{y-f(x_1)}{f(x_0)-f(x_1)}" src="https://s0.wp.com/latex.php?latex=%5Cdfrac%7Bx-x_1%7D%7Bx_0-x_1%7D+%3D+%5Cdfrac%7By-f%28x_1%29%7D%7Bf%28x_0%29-f%28x_1%29%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p>Karena <img alt="x = x_2" src="https://s0.wp.com/latex.php?latex=x+%3D+x_2&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> maka <img alt="y = 0" src="https://s0.wp.com/latex.php?latex=y+%3D+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" />, sehingga diperoleh</p>
+<p><img alt="\dfrac{x_2-x_1}{x_0-x_1} = \dfrac{0-f(x_1)}{f(x_0)-f(x_1)}" src="https://s0.wp.com/latex.php?latex=%5Cdfrac%7Bx_2-x_1%7D%7Bx_0-x_1%7D+%3D+%5Cdfrac%7B0-f%28x_1%29%7D%7Bf%28x_0%29-f%28x_1%29%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="x_2-x_1 = -\dfrac{f(x_1)[x_0-x_1]}{f(x_0)-f(x_1)}" src="https://s0.wp.com/latex.php?latex=x_2-x_1+%3D+-%5Cdfrac%7Bf%28x_1%29%5Bx_0-x_1%5D%7D%7Bf%28x_0%29-f%28x_1%29%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="x_2 = x_1-\dfrac{f(x_1)[x_0-x_1]}{f(x_0)-f(x_1)}" src="https://s0.wp.com/latex.php?latex=x_2+%3D+x_1-%5Cdfrac%7Bf%28x_1%29%5Bx_0-x_1%5D%7D%7Bf%28x_0%29-f%28x_1%29%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="= x_1-\dfrac{f(x_1)[x_0-x_1]}{f(x_1)-f(x_0)}" src="https://s0.wp.com/latex.php?latex=%3D+x_1-%5Cdfrac%7Bf%28x_1%29%5Bx_0-x_1%5D%7D%7Bf%28x_1%29-f%28x_0%29%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p>secara umum rumus Metode Secant ini ditulis</p>
+<p><img alt="x_{n+1} = x_n -\dfrac{f(x_n)[x_n-x_{n-1}]}{f(x_n)-f(x_{n-1})}" src="https://s0.wp.com/latex.php?latex=x_%7Bn%2B1%7D+%3D+x_n+-%5Cdfrac%7Bf%28x_n%29%5Bx_n-x_%7Bn-1%7D%5D%7D%7Bf%28x_n%29-f%28x_%7Bn-1%7D%29%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p>Prosedur Metode Secant :</p>
+<p>Ambil dua titik awal, misal <img alt="x_0" src="https://s0.wp.com/latex.php?latex=x_0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="x_1" src="https://s0.wp.com/latex.php?latex=x_1&amp;bg=ffffff&amp;fg=666666&amp;s=0" />. Ingat bahwa pengambilan titik awal tidak disyaratkan alias pengambilan secara sebarang. Setelah itu hitung <img alt="x_2" src="https://s0.wp.com/latex.php?latex=x_2&amp;bg=ffffff&amp;fg=666666&amp;s=0" />menggunakan rumus diatas. Kemudian pada iterasi selanjutnya ambil <img alt="x_1" src="https://s0.wp.com/latex.php?latex=x_1&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="x_2" src="https://s0.wp.com/latex.php?latex=x_2&amp;bg=ffffff&amp;fg=666666&amp;s=0" />sebagai titik awal dan hitung <img alt="x_3" src="https://s0.wp.com/latex.php?latex=x_3&amp;bg=ffffff&amp;fg=666666&amp;s=0" />. Kemudian ambil <img alt="x_2" src="https://s0.wp.com/latex.php?latex=x_2&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="x_3" src="https://s0.wp.com/latex.php?latex=x_3&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> sebagai titik awal dan hitung <img alt="x_4" src="https://s0.wp.com/latex.php?latex=x_4&amp;bg=ffffff&amp;fg=666666&amp;s=0" />. Begitu seterusnya sampai iterasi yang diingankan atau sampai mencapai error yang cukup kecil.</p>
+<p><strong>Contoh :
+</strong></p>
+<p>Tentukan salah satu akar dari <img alt="4x^3-15x2 + 17x -6 = 0" src="https://s0.wp.com/latex.php?latex=4x%5E3-15x2+%2B+17x+-6+%3D+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> menggunakan <strong>Metode Secant</strong> sampai 9 iterasi.</p>
+<p><strong>Penyelesaian :
+</strong></p>
+<p><img alt="f(x) = 4x^3-15x2 + 17x -6" src="https://s0.wp.com/latex.php?latex=f%28x%29+%3D+4x%5E3-15x2+%2B+17x+-6&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p>iterasi 1 :</p>
+<p>ambil <img alt="x_0 = -1" src="https://s0.wp.com/latex.php?latex=x_0+%3D+-1&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="x_0 = 3" src="https://s0.wp.com/latex.php?latex=x_0+%3D+3&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> (ngambil titik awal ini sebarang saja, tidak ada syarat apapun)</p>
+<p><img alt="\begin{aligned} f(-1) &amp;= 4(-1)^3 -15(-1)^2 + 17(-1) -6 = -42\ f(3) &amp;= 4(3)^3 -15(3)^2 + 17(3) -6 = 18\ x_2 &amp;= 3 -\dfrac{(18)[3-(-1)]}{18-(-42)} = 1.8 \end{aligned}" src="https://s0.wp.com/latex.php?latex=%5Cbegin%7Baligned%7D+f%28-1%29+%26%3D+4%28-1%29%5E3+-15%28-1%29%5E2+%2B+17%28-1%29+-6+%3D+-42%5C%5C+f%283%29+%26%3D+4%283%29%5E3+-15%283%29%5E2+%2B+17%283%29+-6+%3D+18%5C%5C+x_2+%26%3D+3+-%5Cdfrac%7B%2818%29%5B3-%28-1%29%5D%7D%7B18-%28-42%29%7D+%3D+1.8+%5Cend%7Baligned%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p>iterasi 2 :</p>
+<p>ambil <img alt="x_1 = 3" src="https://s0.wp.com/latex.php?latex=x_1+%3D+3&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="x_2 = 1.8" src="https://s0.wp.com/latex.php?latex=x_2+%3D+1.8&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="\begin{aligned} f(1.8) &amp;= 4(1.8)^3 -15(1.8)2 + 17(1.8) -6 = -0.672\ x_3 &amp;= 1.8 -\dfrac{(-0.672)[1.8-(3)]}{-0.672-18} = 1.84319 \end{aligned}" src="https://s0.wp.com/latex.php?latex=%5Cbegin%7Baligned%7D+f%281.8%29+%26%3D+4%281.8%29%5E3+-15%281.8%292+%2B+17%281.8%29+-6+%3D+-0.672%5C%5C+x_3+%26%3D+1.8+-%5Cdfrac%7B%28-0.672%29%5B1.8-%283%29%5D%7D%7B-0.672-18%7D+%3D+1.84319+%5Cend%7Baligned%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p>iterasi 3 :</p>
+<p>ambil <img alt="x_2 = 1.8" src="https://s0.wp.com/latex.php?latex=x_2+%3D%C2%A01.8&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="x_3 = 1.84319" src="https://s0.wp.com/latex.php?latex=x_3+%3D%C2%A01.84319&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="\begin{aligned} f(1.84319) &amp;= 4(1.84319)^3 -15(1.84319)^2 + 17(1.84319) -6 = -0.57817\ x_4 &amp;= (1.84319) -\dfrac{(-0.57817)[1.84319-1.8]}{-0.57817-(0.672)} = 2.10932 \end{aligned}" src="https://s0.wp.com/latex.php?latex=%5Cbegin%7Baligned%7D+f%281.84319%29+%26%3D+4%281.84319%29%5E3+-15%281.84319%29%5E2+%2B+17%281.84319%29+-6+%3D+-0.57817%5C%5C+x_4+%26%3D+%281.84319%29+-%5Cdfrac%7B%28-0.57817%29%5B1.84319-1.8%5D%7D%7B-0.57817-%280.672%29%7D+%3D+2.10932+%5Cend%7Baligned%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p>iterasi 4 :</p>
+<p>ambil <img alt="x_3 = 1.84319" src="https://s0.wp.com/latex.php?latex=x_3+%3D+1.84319&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="x_4 = 2.10932" src="https://s0.wp.com/latex.php?latex=x_4+%3D%C2%A02.10932&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="\begin{aligned} f(2.10932) &amp;= 4(2.10932)^3 -15(2.10932)^2 + 17(2.10932) -6 = 0.65939\ x_5 &amp;= 2.10932 -\dfrac{(0.65939)[2.10932-1.84319]}{0.65939-(-0.57817)} = 1.96752 \end{aligned}" src="https://s0.wp.com/latex.php?latex=%5Cbegin%7Baligned%7D+f%282.10932%29+%26%3D+4%282.10932%29%5E3+-15%282.10932%29%5E2+%2B+17%282.10932%29+-6+%3D+0.65939%5C%5C+x_5+%26%3D+2.10932+-%5Cdfrac%7B%280.65939%29%5B2.10932-1.84319%5D%7D%7B0.65939-%28-0.57817%29%7D+%3D+1.96752+%5Cend%7Baligned%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p>iterasi 5 :</p>
+<p>ambil <img alt="x_4 = 2.10932" src="https://s0.wp.com/latex.php?latex=x_4+%3D%C2%A02.10932&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="x_5 = 1.96752" src="https://s0.wp.com/latex.php?latex=x_5+%3D%C2%A01.96752&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="\begin{aligned} f(1.96752) &amp;= 4(1.96752)^3 -15(1.96752)2 + 17(1.96752) -6 = -0.15303\ x_6 &amp;= (1.96752) -\dfrac{(-0.15303)[1.96752-2.10932]}{-0.15303-0.65939)} = 1.99423 \end{aligned}" src="https://s0.wp.com/latex.php?latex=%5Cbegin%7Baligned%7D+f%281.96752%29+%26%3D+4%281.96752%29%5E3+-15%281.96752%292+%2B+17%281.96752%29+-6+%3D+-0.15303%5C%5C+x_6+%26%3D+%281.96752%29+-%5Cdfrac%7B%28-0.15303%29%5B1.96752-2.10932%5D%7D%7B-0.15303-0.65939%29%7D+%3D+1.99423+%5Cend%7Baligned%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p>iterasi 6 :</p>
+<p>ambil <img alt="x_5 = 1.96752" src="https://s0.wp.com/latex.php?latex=x_5+%3D%C2%A01.96752&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="x_6 = 1.99423" src="https://s0.wp.com/latex.php?latex=x_6+%3D%C2%A01.99423&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="\begin{aligned} f(1.99423) &amp;= 4(1.99423)^3 -15(1.99423)^2 + 17(1.99423) -6 = -0.02854\ x_7 &amp;= (1.99423) -\dfrac{(-0.02854)[1.99423-1.96752]}{-0.02854-(-0.15303)} = 2.00036 \end{aligned}" src="https://s0.wp.com/latex.php?latex=%5Cbegin%7Baligned%7D+f%281.99423%29+%26%3D+4%281.99423%29%5E3+-15%281.99423%29%5E2+%2B+17%281.99423%29+-6+%3D+-0.02854%5C%5C+x_7+%26%3D+%281.99423%29+-%5Cdfrac%7B%28-0.02854%29%5B1.99423-1.96752%5D%7D%7B-0.02854-%28-0.15303%29%7D+%3D+2.00036+%5Cend%7Baligned%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p>iterasi 7 :</p>
+<p>ambil <img alt="x_6 = 1.99423" src="https://s0.wp.com/latex.php?latex=x_6+%3D%C2%A01.99423&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="x_7 = 2.00036" src="https://s0.wp.com/latex.php?latex=x_7+%3D%C2%A02.00036&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="\begin{aligned} f(2.00036) &amp;= 4(2.00036)^3 -15(2.00036)2 + 17(2.00036) -6 = 0.00178\ x_8 &amp;= 2.00036 -\dfrac{(0.00178)[2.00036-1.99423]}{0.00178-(-0.02854)} = 2.00000 \end{aligned}" src="https://s0.wp.com/latex.php?latex=%5Cbegin%7Baligned%7D+f%282.00036%29+%26%3D+4%282.00036%29%5E3+-15%282.00036%292+%2B+17%282.00036%29+-6+%3D+0.00178%5C%5C+x_8+%26%3D+2.00036+-%5Cdfrac%7B%280.00178%29%5B2.00036-1.99423%5D%7D%7B0.00178-%28-0.02854%29%7D+%3D+2.00000+%5Cend%7Baligned%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p>iterasi 8 :</p>
+<p>ambil <img alt="x_7 = 2.00036" src="https://s0.wp.com/latex.php?latex=x_7+%3D%C2%A02.00036&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="x_8 = 1.999996" src="https://s0.wp.com/latex.php?latex=x_8+%3D%C2%A01.999996&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="\begin{aligned} f(1.999996) &amp;= 4(1.999996)^3 -15(1.999996)^2 + 17(1.999996) -6 = -0.0002\ x_9 &amp;= (1.999996) -\dfrac{(-0.0002)[1.999996-2.00036]}{-0.0002-0.00178} = 2.0000 \end{aligned}" src="https://s0.wp.com/latex.php?latex=%5Cbegin%7Baligned%7D+f%281.999996%29+%26%3D+4%281.999996%29%5E3+-15%281.999996%29%5E2+%2B+17%281.999996%29+-6+%3D+-0.0002%5C%5C+x_9+%26%3D+%281.999996%29+-%5Cdfrac%7B%28-0.0002%29%5B1.999996-2.00036%5D%7D%7B-0.0002-0.00178%7D+%3D+2.0000+%5Cend%7Baligned%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p>iterasi 9 :</p>
+<p>ambil <img alt="x_8 = 1.999996" src="https://s0.wp.com/latex.php?latex=x_8+%3D%C2%A01.999996&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> dan <img alt="x_9 = 2.00000" src="https://s0.wp.com/latex.php?latex=x_9+%3D%C2%A02.00000&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<p><img alt="\begin{aligned} f(2.00000) &amp;= 4(2.00000)^3 -15(2.00000)^2 + 17(2.00000) -6 = 0.00000\ x_{10} &amp;= (2.00000) -\dfrac{(0.00000)[2.00000-1.999996]}{0.00000-(-0.00002)} = 0.00000 \end{aligned}" src="https://s0.wp.com/latex.php?latex=%5Cbegin%7Baligned%7D+f%282.00000%29+%26%3D+4%282.00000%29%5E3+-15%282.00000%29%5E2+%2B+17%282.00000%29+-6+%3D+0.00000%5C%5C+x_%7B10%7D+%26%3D+%282.00000%29+-%5Cdfrac%7B%280.00000%29%5B2.00000-1.999996%5D%7D%7B0.00000-%28-0.00002%29%7D+%3D+0.00000+%5Cend%7Baligned%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></p>
+<table>
+<thead>
+<tr>
+<th><img alt="n" src="https://s0.wp.com/latex.php?latex=n&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+<th><img alt="x_{n-1}" src="https://s0.wp.com/latex.php?latex=x_%7Bn-1%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+<th><img alt="x_{n}" src="https://s0.wp.com/latex.php?latex=x_%7Bn%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+<th><img alt="x_{n+1}" src="https://s0.wp.com/latex.php?latex=x_%7Bn%2B1%7D&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+<th><img alt="f(x_{n-1})" src="https://s0.wp.com/latex.php?latex=f%28x_%7Bn-1%7D%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+<th><img alt="f(x_{n})" src="https://s0.wp.com/latex.php?latex=f%28x_%7Bn%7D%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+<th><img alt="f(x_{n+1})" src="https://s0.wp.com/latex.php?latex=f%28x_%7Bn%2B1%7D%29&amp;bg=ffffff&amp;fg=666666&amp;s=0" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>123456789</td>
+<td>-131.81.843192.109321.967521.994232.000362.00000</td>
+<td>31.81.843192.109321.967521.994232.000362.000002.00000</td>
+<td>1.81.843192.109321.967521.994232.000362.000002.000002.00000</td>
+<td>-4218-0.672-0.578170.65939-0.15303-0.028540.00178-0.00002</td>
+<td>18-0.672-0.578170.65939-0.15303-0.028540.00178-0.000020.00000</td>
+<td>-0.672-0.578170.65939-0.15303-0.028540.00178-0.000020.000000.00000</td>
+</tr>
+</tbody>
+</table>
+<p>Jadi salah satu akar dari <img alt="4x^3-15x2 + 17x -6 = 0" src="https://s0.wp.com/latex.php?latex=4x%5E3-15x2+%2B+17x+-6+%3D+0&amp;bg=ffffff&amp;fg=666666&amp;s=0" /> adalah 2</p>
+<p><strong>Program</strong></p>
+<pre><code class="python">#Secant 
+def  garis potong ( a , b , n ): 
+    e  =  0,001 
+    fa  =  a ** 2 - 5 * a + * x + 6 n + = 1 print ( &quot;iterasi ke-&quot; + str ( n )) jika abs ( a - b ) 6 
+    fb  =  b ** 2 - 5 * b + 6 
+    x  =  a - (( b - a ) / ( fb - fa )) * fa 
+    fx  =  x ** 2 - 5
+
+
+      &lt; e : 
+        print ( &quot;Jumlah iterasi:&quot; , n ) 
+        cetak ( x ) 
+    lain-lain : 
+        a = b 
+        b = x 
+        Garis potong ( a , b , n ) 
+a  =  float ( input( &quot;Masukkan nilai a:&quot; )) 
+b  =  float ( input ( &quot;Masukkan nilai b:&quot; )) 
+n  =  0 
+Garis potong ( a , b , 0 )
+</code></pre>
+
+<p><strong>Keluaran</strong></p>
+<pre><code class="python">Masukkan nilai a: 1
+Masukkan nilai b: 1.5
+iterasi ke-1
+iterasi ke-2
+iterasi ke-3
+iterasi ke-4
+iterasi ke-5
+iterasi ke-6
+Jumlah iterasi: 6
+1.9999999975499005
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
