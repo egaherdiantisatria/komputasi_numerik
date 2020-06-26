@@ -1,0 +1,1 @@
+![jawaban1.png](https://github.com/elsafir/komputasi-numerik/blob/master/jawaban1.png?raw=true)
