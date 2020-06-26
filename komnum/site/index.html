@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="None">
+        
+        
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <title>My Docs</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body class="homepage">
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href=".">My Docs</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem active">
+                                <a href="." class="nav-link">Home</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Metode%20Romberg/" class="nav-link">Metode Romberg[¶](https://lukmanarimashuri.github.io/metode_romberg/#metode-romberg)</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="biodata/" class="nav-link">Biodata</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="solusi%20numerik/" class="nav-link">Metode Bagi-Dua (Bisection Method)</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="tugas/" class="nav-link">Tugas</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" class="nav-link disabled">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="Metode%20Romberg/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h3 id="apa-sih-nilai-error-ituu">Apa sih <strong>Nilai Error</strong> ituu ??</h3>
+<p>Secara umum terdapat dua sumber utama penyebab terjadinya error dalam perhitungan numerik, yaitu:</p>
+<ol>
+<li>Error pembulatan ( round-off error )</li>
+</ol>
+<p>Perhitungan dengan metode numerik hampir selalu menggunakan bilangan riil.Masalah timbul apabila komputasi numerik dikerjakan oleh mesin (dalam hal ini dengan menggunakan komputer) karena semua bilangan riil tidak dapat disajikan secara tepat di dalam komputer. Keterbatasan komputer dalam menyajikan bilangan riil menghasilkan error yang disebut error pembulatan.</p>
+<p>Sebagai contoh 1/6 = 0.166666666… tidak dapat dinyatakan secara tepat oleh komputer karena digit 6 panjangnya tidak terbatas. Komputer hanya mampu merepresentasikan sejumlah digit (atau bit dalam sistem biner) saja. Bilangan riil yang panjangnya melebihi jumlah digit (bit) yang dapat direpresentasikan oleh komputer dibulatkan ke bilangan terdekat. Misalnya sebuah komputer hanya dapat merepresentasikan bilangan riil dalam 6 digit angka berarti, maka representasi bilangan 1/6 = 0.1666666666… di dalam komputer 6-digit tersebut adalah 0.166667. Galat pembulatannya adalah 1/6 – 0.166667 = -0.000000333.</p>
+<p>Contoh dalam sistem biner misalnya 1/10 = 0.000110011001100110011 00110011…2 direpresentasikan di dalam komputer dalam jumlah bit yang terbatas. Kebanyakan komputer digital mempunyai dua buah cara penyajian bilangan riil, yaitu bilangan titik-tetap (fixed point) dan bilangan titik-kambang (floatingpoint). Dalam format bilangan titik -tetap setiap bilangan disajikan dengan jumlah tempat desimal yang tetap, misalnya 62.358, 0.013, 1.000. Sedangkan dalam format bilangan titik-kambang setiap bilangan disajikan dengan jumlah digit berarti yang sudah tetap, misalnya 0.6238 103 0.1714 ^10-13 atau ditulis juga 0.6238E+03 0.1714E-13. Digit-digit berarti di dalam format bilangan titik-kambang disebut juga angka bena (significant figure).</p>
+<ol>
+<li>Galat Pemotongan ( truncation error )</li>
+</ol>
+<p>Galat pemotongan adalah galat yang ditimbulkan oleh pembatasan jumlah komputasi yang digunakan pada proses metode numerik. Banyak metode dalam metode numerik yang penurunan rumusnya menggunakan proses iterasi yang jumlahnya tak terhingga, sehingga untuk membatasi proses penghitungan, jumlah iterasi dibatasi sampai langkah ke n. Hasil penghitungan sampai langkah ke n akan menjadi hasil hampiran dan nilai penghitungan langkah n keatas akan menjadi galat pemotongan. dalam hal ini galat pemotongan kan menjadi sangat kecil sekali jika nilai n di perbesar. Konsekuensinya tentu saja jumlah proses penghitungannya akan semakin banyak.</p>
+<h4 id="contoh-kasus">Contoh Kasus :</h4>
+<ol>
+<li>Diketahui:</li>
+</ol>
+<p>y = x2 + 5x + 6</p>
+<p>x=3</p>
+<p>h=0.3</p>
+<p>h=0.2</p>
+<p>h=0.1</p>
+<p>Ditanya : Et, Ea, εt, εa  ?</p>
+<p>Jawab :</p>
+<ul>
+<li>Saat <strong>h=0,3</strong></li>
+</ul>
+<p>– <strong>Approximate Value (Va)</strong></p>
+<p><img alt="Capture" src="https://d4anm2017a.files.wordpress.com/2017/09/capture.png?w=210&amp;h=49" /></p>
+<p><img alt="1" src="https://d4anm2017a.files.wordpress.com/2017/09/1.png?w=212&amp;h=54" /></p>
+<p><img alt="15" src="https://d4anm2017a.files.wordpress.com/2017/09/15.png?w=375&amp;h=69" /><img alt="17" src="https://d4anm2017a.files.wordpress.com/2017/09/17.png?w=236&amp;h=68" /><img alt="18" src="https://d4anm2017a.files.wordpress.com/2017/09/18.png?w=181&amp;h=82" /><img alt="19" src="https://d4anm2017a.files.wordpress.com/2017/09/19.png?w=147&amp;h=65" /></p>
+<p>Jadi Va yang didapatkan adalah <strong>11,3</strong></p>
+<p>– <strong>True Value (Vt)</strong></p>
+<p><img alt="7" src="https://d4anm2017a.files.wordpress.com/2017/09/7.png?w=188&amp;h=40" />
+<img alt="8" src="https://d4anm2017a.files.wordpress.com/2017/09/8.png?w=200&amp;h=59" /><img alt="9" src="https://d4anm2017a.files.wordpress.com/2017/09/9.png?w=176&amp;h=53" /><img alt="10" src="https://d4anm2017a.files.wordpress.com/2017/09/10.png?w=133&amp;h=56" /></p>
+<p>Jadi Vt yang didapatkan adalah <strong>11</strong></p>
+<p>– <strong>True Error (Et)</strong></p>
+<p><img alt="12" src="https://d4anm2017a.files.wordpress.com/2017/09/12.png?w=164&amp;h=50" /></p>
+<p><img alt="13" src="https://d4anm2017a.files.wordpress.com/2017/09/13.png?w=183&amp;h=49" /></p>
+<p><img alt="14.PNG" src="https://d4anm2017a.files.wordpress.com/2017/09/14.png?w=109&amp;h=37" /></p>
+<p>Jadi Et yang didapat adalah <strong>-0,3</strong></p>
+<p>– <strong>Relative True Error (εt )</strong>  </p>
+<p><img alt="11" src="https://d4anm2017a.files.wordpress.com/2017/09/111.png?w=269&amp;h=71" /></p>
+<p>Jadi <strong>εt</strong> yang didapatkan adalah <strong>-0,027</strong></p>
+<ul>
+<li>Saat <strong>h = 0,2</strong></li>
+</ul>
+<p><strong>– Approximate Value (Va)</strong></p>
+<p><img alt="VA 1" src="https://d4anm2017a.files.wordpress.com/2017/09/va-1.jpg?w=264&amp;h=72" /></p>
+<p><img alt="VA 2" src="https://d4anm2017a.files.wordpress.com/2017/09/va-2.jpg?w=261&amp;h=83" /></p>
+<p><img alt="VA 3" src="https://d4anm2017a.files.wordpress.com/2017/09/va-3.jpg?w=248&amp;h=72" /></p>
+<p><img alt="VA 4" src="https://d4anm2017a.files.wordpress.com/2017/09/va-4.jpg?w=472&amp;h=84" /><img alt="VA 5" src="https://d4anm2017a.files.wordpress.com/2017/09/va-5.jpg?w=238&amp;h=86" /><img alt="VA 6" src="https://d4anm2017a.files.wordpress.com/2017/09/va-6.jpg?w=182&amp;h=70" /><img alt="VA 7" src="https://d4anm2017a.files.wordpress.com/2017/09/va-7.jpg?w=159&amp;h=53" /></p>
+<p>Jadi Va yang didapatkan adalah <strong>11,2</strong></p>
+<p><strong>– True Value (Vt)</strong></p>
+<p><img alt="VT 1" src="https://d4anm2017a.files.wordpress.com/2017/09/vt-1.jpg?w=205&amp;h=67" /><img alt="VT 2" src="https://d4anm2017a.files.wordpress.com/2017/09/vt-2.jpg?w=170&amp;h=77" /><img alt="VT 3" src="https://d4anm2017a.files.wordpress.com/2017/09/vt-3.jpg?w=196&amp;h=78" /><img alt="VT 4" src="https://d4anm2017a.files.wordpress.com/2017/09/vt-4.jpg?w=190&amp;h=67" /><img alt="VT 5" src="https://d4anm2017a.files.wordpress.com/2017/09/vt-5.jpg?w=139&amp;h=61" /></p>
+<p>Jadi Vt yang didapatkan adalah <strong>11</strong></p>
+<p>–<strong>True Error (Et)</strong></p>
+<p><img alt="EA 1" src="https://d4anm2017a.files.wordpress.com/2017/09/ea-1.jpg?w=175&amp;h=63" /></p>
+<p><img alt="EA 2" src="https://d4anm2017a.files.wordpress.com/2017/09/ea-2.jpg?w=135&amp;h=52" /></p>
+<p>Jadi Et yang didapat adalah <strong>-0,1</strong></p>
+<p><strong>-Approximate Error (Ea)</strong></p>
+<p><img alt="ET 1" src="https://d4anm2017a.files.wordpress.com/2017/09/et-1.jpg?w=173&amp;h=58" />(Et = Va – Va sebelum)<img alt="ET 2" src="https://d4anm2017a.files.wordpress.com/2017/09/et-2.jpg?w=148&amp;h=64" /></p>
+<p>Jadi Ea yang didapat adalah <strong>-0,2</strong></p>
+<p>–<strong>Relative True Error (εt )</strong></p>
+<p><img alt="epsilont1" src="https://d4anm2017a.files.wordpress.com/2017/09/epsilont1.jpg?w=161&amp;h=71" /></p>
+<p><img alt="epsilont2" src="https://d4anm2017a.files.wordpress.com/2017/09/epsilont2.jpg?w=208&amp;h=51" /></p>
+<p>Jadi <strong>εt</strong> yang didapatkan adalah <strong>-0,02</strong></p>
+<p><strong>– Relative Approximate Error (εa)</strong></p>
+<p><img alt="epsilona1" src="https://d4anm2017a.files.wordpress.com/2017/09/epsilona1.jpg?w=182&amp;h=91" /></p>
+<p><img alt="epsilona2" src="https://d4anm2017a.files.wordpress.com/2017/09/epsilona2.jpg?w=184&amp;h=86" /></p>
+<p><img alt="epsilona3" src="https://d4anm2017a.files.wordpress.com/2017/09/epsilona3.jpg?w=208&amp;h=68" /></p>
+<p>Jadi <strong>εa</strong> yang didapatkan adalah <strong>-0,00892</strong> jika di persenkan menjadi -0.0089%</p>
+<ul>
+<li>Saat <strong>h = 0,1</strong></li>
+</ul>
+<p>– <strong>Approximate Value (Va)</strong><img alt="6694193430417" src="https://d4anm2017a.files.wordpress.com/2017/09/6694193430417.png?w=529&amp;h=541" /></p>
+<p>Jadi Va yang didapatkan adalah <strong>11,1</strong></p>
+<p>– <strong>True Error (Et)</strong></p>
+<p><img alt="Et" src="https://d4anm2017a.files.wordpress.com/2017/09/et.png?w=452&amp;h=176" /></p>
+<p>Jadi Et yang didapat adalah <strong>-0,1</strong></p>
+<p><strong>-Approximate Error (Ea)</strong></p>
+<p><img alt="Ea" src="https://d4anm2017a.files.wordpress.com/2017/09/ea.png?w=254&amp;h=121" /></p>
+<p>Jadi Ea yang didapat adalah <strong>-0,1</strong></p>
+<p>–<strong>Relative True Error (εt )</strong></p>
+<p><img alt="epsiolont" src="https://d4anm2017a.files.wordpress.com/2017/09/epsiolont.png?w=394&amp;h=157" /> Jadi <strong>εt</strong> yang didapatkan adalah <strong>-0,01</strong></p>
+<p><strong>– Relative Approximate Error (εa)</strong></p>
+<p><img alt="epsilona" src="https://d4anm2017a.files.wordpress.com/2017/09/epsilona.png?w=380&amp;h=130" /> Jadi <strong>εt</strong> yang didapatkan adalah <strong>-0,0901</strong> jika di persenkan menjadi -0.0901%</p>
+<pre><code class="python">import math
+
+x = 4
+check = 1
+a = 0
+b = 1
+
+while check &gt; 0.001 :
+    f_x = 0
+    f_y = 0
+    for i in range(a):
+        f_x += (2**i)*x**i/math.factorial(i)
+
+    for j in range(b):
+        f_y += (2**j)*x**j/math.factorial(j)
+
+    check = f_y - f_x
+    a+=1
+    b+=1
+    print('iterasi ke-',a,'= ',check)
+</code></pre>
+
+<pre><code class="python">output:
+
+iterasi ke- 1 =  1.0
+iterasi ke- 2 =  8.0
+iterasi ke- 3 =  32.0
+iterasi ke- 4 =  85.33333333333333
+iterasi ke- 5 =  170.66666666666669
+iterasi ke- 6 =  273.0666666666666
+iterasi ke- 7 =  364.08888888888896
+iterasi ke- 8 =  416.1015873015872
+iterasi ke- 9 =  416.1015873015872
+iterasi ke- 10 =  369.8680776014112
+iterasi ke- 11 =  295.89446208112895
+iterasi ke- 12 =  215.195972422639
+iterasi ke- 13 =  143.46398161509296
+iterasi ke- 14 =  88.28552714774924
+iterasi ke- 15 =  50.448872655856576
+iterasi ke- 16 =  26.90606541645684
+iterasi ke- 17 =  13.45303270822842
+iterasi ke- 18 =  6.330838921519444
+iterasi ke- 19 =  2.8137061873417224
+iterasi ke- 20 =  1.184718394670199
+iterasi ke- 21 =  0.47388735786807956
+iterasi ke- 22 =  0.18052851728316455
+iterasi ke- 23 =  0.06564673355751438
+iterasi ke- 24 =  0.022833646454728296
+iterasi ke- 25 =  0.0076112154847578495
+iterasi ke- 26 =  0.0024355889549951826
+iterasi ke- 27 =  0.0007494119863622473
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = ".",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="js/base.js" defer></script>
+        <script src="search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
+
+<!--
+MkDocs version : 1.1
+Build Date UTC : 2020-04-25 14:06:29
+-->
